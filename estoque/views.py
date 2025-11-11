@@ -2,11 +2,8 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.http import HttpResponse
 
 from estoque.models import Item
-<<<<<<< HEAD
 def index(request):
     return HttpResponse("Bem-vindo ao sistema de estoque!")
-=======
->>>>>>> 035f39511a7fba4fcf823daf71445e3bff1c11b2
 
 def listar_estoque(request):
     items = Item.objects.all().order_by('nome', 'categoria', 'quantidade')

@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from http import HttpResponseRedirect
-from form import DoadorForm
+from django.http import HttpResponseRedirect, HttpResponse
+
+from doador.form import DoadorForm
 
 
 def cadastro_doador(request):

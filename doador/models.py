@@ -7,7 +7,5 @@ class Doador(models.Model):
     endereco = models.TextField(blank=True, null=True)
     data_cadastro = models.DateTimeField(auto_now_add=True)
 
-def __str__(self):
-    return "{self.nome} - {self.email} - {self.telefone} - {self.endereco} - {self.data_cadastro}"
-
-
+    def __str__(self):
+        return f"{self.nome} - {self.email}"

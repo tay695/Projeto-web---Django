@@ -1,15 +1,7 @@
 from django import forms
-from .models import doacao
-
-
-class doacaoForm(forms.ModelForm):
+from .models import Doacao
+class DoacaoForm(forms.ModelForm):
     class Meta:
-        model = doacao
-        fields = ['doador', 'item', 'quantidade', 'data_doacao']
-        
-        
-        
-class doacaoStatusForm(forms.ModelForm):
-    class Meta:
-        model = doacao
-        fields = ['status']
+        model = Doacao
+        fields = ['nome', 'categoria', 'unidade_medida', 'quantidade', 'doador']
+

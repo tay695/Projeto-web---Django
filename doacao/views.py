@@ -1,19 +1,15 @@
-from django.shortcuts import render
-from django.http import HttpResponse
-from form import doacaoForm
-
+from django.shortcuts import render, redirect
+from doacao.form import DoacaoForm
+from estoque.models import EntradaEstoque
+from django.shortcuts import render, redirect
 
 def criar_doacao(request):
-    if request.method == 'POST':
-        if request.method == 'POST':
-            form = doacaoForm(request.POST)
-            if form.is_valid():
-                form.save()
-        return HttpResponse("Doação criada com sucesso!")
+    if request.method == "POST":
+        form = DoacaoForm(request.POST)
+        if form.is_valid():
+            form.save()  # o save já atualiza o estoque automaticamente
+            return redirect("listar_estoque")
     else:
-        form = doacaoForm()
-    return render(request, 'doacao/formulario_doacao.html')
+        form = DoacaoForm()
 
-
-def index(request):
-    return HttpResponse("Página de Doações")
+    return render(request, "doacao/criar_doacao.html", {"form": form})

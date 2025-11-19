@@ -51,9 +51,7 @@ def entidade_delete(request, pk):
     if request.method == 'POST':
         entidade.delete()
         return redirect('entidade_list')
-
     return render(request, 'entidade_beneficiada/entidade_confirm_delete.html', {'entidade': entidade})
-
 
 @login_required
 def entidade_detail(request, pk):

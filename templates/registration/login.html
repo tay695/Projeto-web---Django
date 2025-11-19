@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Login de Acesso{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title text-center">Acesso ao Sistema</h4>
+                <p class="card-description text-center">
+                    A área de cadastro de entidades é restrita a Assistentes Sociais.
+                </p>
+
+                {% if form.errors %}
+                <div class="alert alert-danger" role="alert">
+                    Seu nome de usuário e/ou senha estão incorretos. Tente novamente.
+                </div>
+                {% endif %}
+
+                <form class="forms-sample" method="post">
+                    {% csrf_token %}
+                    
+                    <div class="form-group">
+                        <label for="{{ form.username.id_for_label }}">Usuário</label>
+                        {{ form.username }} 
+                        {% comment %}
+                           Se você estiver usando o forms padrão do Django, o form field 
+                           deve ter a classe 'form-control'. Se não tiver, adicione-a no widget do seu form, 
+                           ou use: {{ form.username|add_class:'form-control' }} se tiver o 'django-widget-tweaks'.
+                           Vou assumir que você estilizará via CSS ou widget.
+                        {% endcomment %}
+                        
+                        {% for error in form.username.errors %}
+                            <label class="text-danger">{{ error }}</label>
+                        {% endfor %}
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="{{ form.password.id_for_label }}">Senha</label>
+                        {{ form.password }}
+                        {% for error in form.password.errors %}
+                            <label class="text-danger">{{ error }}</label>
+                        {% endfor %}
+                    </div>
+                    
+                    {# O campo 'next' é passado automaticamente pelo Django para redirecionar após o login #}
+                    <input type="hidden" name="next" value="{{ next }}" />
+
+                    <button type="submit" class="btn btn-primary mr-2 btn-block">Entrar</button>
+                    
+                    <div class="text-center mt-3">
+                        <a href="{% url 'password_reset' %}" class="auth-link text-black">Esqueceu a senha?</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+{# Aqui você pode incluir scripts específicos para a página de login, se houver #}
+{% endblock %}

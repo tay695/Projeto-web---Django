@@ -13,6 +13,7 @@ class EntidadeBeneficiada(models.Model):
     endereco = models.CharField(max_length=255)
     prioridade = models.CharField(max_length=5, choices=PRIORIDADE_CHOICES, default='BAIXA')
     data_cadastro = models.DateField(auto_now_add=True)
+
     num_membros = models.PositiveIntegerField(
         default=1,
         verbose_name="Pessoas Atendidas / Membros da Família",

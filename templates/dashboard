@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard - {{ usuario }}{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Bem-vindo, {{ usuario }}! 👋</h4>
+                <p class="card-description">Visão geral rápida das entidades.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Total de Entidades Cadastradas</p>
+                <h3 class="font-weight-bold">{{ total_entidades }}</h3>
+                <p class="text-muted">Entidades que já receberam ou estão aptas a receber doações.</p>
+                <a href="{% url 'entidade_list' %}" class="text-primary">Ver Lista Completa</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title text-danger">Prioridade de Atendimento ALTA</p>
+                <h3 class="font-weight-bold text-danger">{{ entidades_alta_prioridade }}</h3>
+                <p class="text-muted">Entidades com necessidade urgente de doação.</p>
+                <a href="{% url 'entidade_list' %}?prioridade=alta" class="text-danger">Acessar Urgentes</a>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <p class="card-title">Próxima Ação</p>
+                <h3 class="font-weight-bold">Estoque</h3>
+                <p class="text-muted">Comece a cadastrar itens para preencher o estoque.</p>
+                <a href="{% url 'listar_estoque' %}" class="text-success">Ir para Estoque</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

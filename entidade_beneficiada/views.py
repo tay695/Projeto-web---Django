@@ -1,38 +1,62 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required, user_passes_test
+from .forms import EntidadeBeneficiadaForm
+from .models import EntidadeBeneficiada
 
 
-from django.urls import reverse_lazy
-from django.views.generic import (
-    ListView, CreateView, UpdateView, DeleteView
-)
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from .models import EntidadeBeneficiada 
-
-class AssistenteSocialRequiredMixin(LoginRequiredMixin, UserPassesTestMixin):
-    def test_func(self):
-        return self.request.user.is_superuser
+def is_assistente_social(user):
+    return user.is_superuser
 
 
+@login_required
+def entidade_list(request):
+    entidades = EntidadeBeneficiada.objects.all()
+    context = {'entidades': entidades}
+    return render(request, 'entidade_beneficiada/entidade_list.html', context)
 
-class EntidadeListView(AssistenteSocialRequiredMixin, ListView):
-    model = EntidadeBeneficiada
-    template_name = 'entidade_beneficiada/entidade_list.html'
-    context_object_name = 'entidades' # Variável usada no template HTML
 
-class EntidadeCreateView(AssistenteSocialRequiredMixin, CreateView):
-    model = EntidadeBeneficiada
-    # Lembre-se de incluir o campo 'num_membros' que você adicionou
-    fields = ['nome', 'responsavel', 'endereco', 'prioridade', 'num_membros']
-    template_name = 'entidade_beneficiada/entidade_form.html'
-    success_url = reverse_lazy('entidade_list')
+@login_required
+@user_passes_test(is_assistente_social)
+def entidade_create(request):
+    if request.method == 'POST':
+        form = EntidadeBeneficiadaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('entidade_list')
+    else:
+        form = EntidadeBeneficiadaForm()
 
-class EntidadeUpdateView(AssistenteSocialRequiredMixin, UpdateView):
-    model = EntidadeBeneficiada
-    fields = ['nome', 'responsavel', 'endereco', 'prioridade', 'num_membros']
-    template_name = 'entidade_beneficiada/entidade_form.html'
-    success_url = reverse_lazy('entidade_list')
+    return render(request, 'entidade_beneficiada/entidade_form.html', {'form': form, 'acao': 'Criar'})
 
-class EntidadeDeleteView(AssistenteSocialRequiredMixin, DeleteView):
-    model = EntidadeBeneficiada
-    template_name = 'entidade_beneficiada/entidade_confirm_delete.html'
-    success_url = reverse_lazy('entidade_list')
+
+@login_required
+@user_passes_test(is_assistente_social)
+def entidade_update(request, pk):
+    entidade = get_object_or_404(EntidadeBeneficiada, pk=pk)
+    if request.method == 'POST':
+        form = EntidadeBeneficiadaForm(request.POST, instance=entidade)
+        if form.is_valid():
+            form.save()
+            return redirect('entidade_list')
+    else:
+        form = EntidadeBeneficiadaForm(instance=entidade)
+
+    return render(request, 'entidade_beneficiada/entidade_form.html', {'form': form, 'acao': 'Editar'})
+
+
+@login_required
+@user_passes_test(is_assistente_social)
+def entidade_delete(request, pk):
+    entidade = get_object_or_404(EntidadeBeneficiada, pk=pk)
+    if request.method == 'POST':
+        entidade.delete()
+        return redirect('entidade_list')
+
+    return render(request, 'entidade_beneficiada/entidade_confirm_delete.html', {'entidade': entidade})
+
+
+@login_required
+def entidade_detail(request, pk):
+    entidade = get_object_or_404(EntidadeBeneficiada, pk=pk)
+    return render(request, 'entidade_beneficiada/entidade_detail.html', {'entidade': entidade})

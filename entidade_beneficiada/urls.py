@@ -1,11 +1,10 @@
 from django.urls import path
-from .views import (
-    EntidadeListView, EntidadeCreateView, EntidadeUpdateView, EntidadeDeleteView
-)
+from . import views
 
 urlpatterns = [
-    path('', EntidadeListView.as_view(), name='entidade_list'),
-    path('novo/', EntidadeCreateView.as_view(), name='entidade_create'),
-    path('<int:pk>/editar/', EntidadeUpdateView.as_view(), name='entidade_update'),
-    path('<int:pk>/deletar/', EntidadeDeleteView.as_view(), name='entidade_delete'),
+    path('', views.entidade_list, name='entidade_list'),
+    path('adicionar/', views.entidade_create, name='entidade_create'),
+    path('<int:pk>/editar/', views.entidade_update, name='entidade_update'),
+    path('<int:pk>/', views.entidade_detail, name='entidade_detail'),
+    path('<int:pk>/excluir/', views.entidade_delete, name='entidade_delete'),
 ]

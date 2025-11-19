@@ -8,7 +8,6 @@ from .models import EntidadeBeneficiada
 def is_assistente_social(user):
     return user.is_superuser
 
-
 @login_required
 def entidade_list(request):
     entidades = EntidadeBeneficiada.objects.all()

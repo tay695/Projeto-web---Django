@@ -1,8 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect, HttpResponse
-
 from doador.form import DoadorForm
-
 
 def cadastro_doador(request):
    if request.method == 'POST':

@@ -1,39 +1,87 @@
 {% extends "_base.html" %}
 
 {% block content %}
-<h2>Estoque</h2>
+<div class="container my-5">
+    <!-- Cabeçalho simples -->
+     <title>Estoque</title>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Estoque </h2>
+    </div>
 
-<a href="{% url 'criar_doacao' %}" class="btn btn-success">Registrar Doação</a>
+    {% regroup items by get_categoria_display as categorias %}
 
-<table class="table mt-3">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Quantidade</th>
-            <th>Categoria</th>
-            <th>Ações</th>
-        </tr>
-    </thead>
+    {% for categoria in categorias %}
+    <h4 class="mt-5 mb-3">{{ categoria.grouper }}</h4>
+    <div class="table-responsive shadow-sm rounded">
+        <table class="table align-middle text-center mb-0" style="background-color: #dbc8c8; border-radius: 8px; overflow: hidden;">
+            <thead style="background-color: #9fc6ce;">
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Quantidade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for item in categoria.list %}
+                <tr class="align-middle" style="transition: 0.3s;">
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.nome }}</td>
+                    <td>{{ item.quantidade }}</td>
+                    <td>
+                        <a href="{% url 'detalhar_item' item.id %}" class="btn btn-info btn-sm rounded-pill me-1">
+                            <i class="fa fa-info-circle me-1"></i>Detalhes
+                        </a>
+                        <a href="{% url 'editar_item' item.id %}" class="btn btn-warning btn-sm rounded-pill me-1">
+                            <i class="fa fa-edit me-1"></i>Editar
+                        </a>
+                        <a href="{% url 'deletar_item' item.id %}" class="btn btn-danger btn-sm rounded-pill">
+                            <i class="fa fa-trash me-1"></i>Excluir
+                        </a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-muted">Nenhum item nesta categoria.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    {% endfor %}
+</div>
 
-    <tbody>
-        {% for item in items %}
-        <tr>
-            <td>{{ item.id }}</td>
-            <td>{{ item.nome }}</td>
-            <td>{{ item.quantidade }}</td>
-            <td>{{ item.get_categoria_display }}</td>
-            <td>
-                <a href="{% url 'detalhar_item' item.id %}" class="btn btn-info btn-sm">Especificações</a>
-                <a href="{% url 'editar_item' item.id %}" class="btn btn-warning btn-sm">Editar</a>
-                <a href="{% url 'deletar_item' item.id %}" class="btn btn-danger btn-sm">Excluir</a>
-            </td>
-        </tr>
-        {% empty %}
-        <tr>
-            <td colspan="5">Nenhum item encontrado.</td>
-        </tr>
-        {% endfor %}
-    </tbody>
-</table>
+<!-- Estilo personalizado -->
+<style>
+    /* Hover suave nas linhas */
+    tbody tr:hover {
+        background-color: #e0f7fa;
+    }
+
+    /* Botões hover */
+    .btn-success:hover {
+        background-color: #b3d8c4 !important;
+        border-color: #a9d1bb !important;
+    }
+
+    .btn-info:hover {
+        background-color: #90e0ef !important;
+        border-color: #90e0ef !important;
+    }
+
+    .btn-warning:hover {
+        background-color: #b5e6c6 !important;
+        border-color: #bed8c7 !important;
+    }
+
+    .btn-danger:hover {
+        background-color: #d6807a !important;
+        border-color: #e0aaa5 !important;
+    }
+
+    /* Cabeçalho das categorias */
+    h4 {
+        color: #6f8db8;
+    }
+</style>
 {% endblock %}

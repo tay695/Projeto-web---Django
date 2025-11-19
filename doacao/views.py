@@ -7,7 +7,7 @@ def criar_doacao(request):
     if request.method == "POST":
         form = DoacaoForm(request.POST)
         if form.is_valid():
-            form.save()  # o save já atualiza o estoque automaticamente
+            form.save()  
             return redirect("listar_estoque")
     else:
         form = DoacaoForm()

@@ -1,5 +1,5 @@
 from django.shortcuts import get_object_or_404, redirect, render
-from httpcore import request
+#from httpcore import request
 from doacao.models import Doacao
 from estoque.models import Item
 from django.contrib.auth.decorators import login_required

@@ -7,7 +7,7 @@ def cadastro_doador(request):
         form = DoadorForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('doador_cadastro.html') 
+            return redirect('doador_cadastro') 
     else:
         form = DoadorForm()
     

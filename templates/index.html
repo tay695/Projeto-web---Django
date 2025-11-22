@@ -50,8 +50,8 @@
                 <div class="navbar-nav ms-auto">
                     <a href="#inicio" class="nav-item nav-link active">Início</a>
                     <a href="#sobre" class="nav-item nav-link">Sobre</a>
-                    <a href="#servicos" class="nav-item nav-link">Serviços</a>
-                    <a href="#projetos" class="nav-item nav-link">Projetos</a>
+                    <a href="#funcionamento" class="nav-item nav-link">Nosso trabalho</a>
+                    <a href="#funcionamento" class="nav-item nav-link">Logística</a>
                     <a href="#contato" class="nav-item nav-link">Contato</a>
                     <a href="{% url 'login' %}" 
                             class="btn ms-3"
@@ -82,7 +82,7 @@
                     <div class="owl-carousel header-carousel animated fadeIn">
                         <img class="img-fluid" src="{% static 'img/distribuição_doacao.jpeg' %}" alt="">
                         <img class="img-fluid" src="{% static 'img/ongs.jpg' %}" alt="">
-                        <img class="img-fluid" src="{% static 'img/images.jpeg' %}" alt="">
+                        <img class="img-fluid" src="{% static 'img/image copy.png' %}" alt="">
                     </div>
                 </div>
             </div>
@@ -102,7 +102,7 @@
             <div class="col-lg-6">
                 <div class="row">
                     <div class="col-6 wow fadeIn" data-wow-delay="0.1s">
-                        <img class="img-fluid" src="{% static 'img/poder-da-solidariedade.jpg' %}" alt="">
+                        <img class="img-fluid" src="{% static 'img/co.jpeg' %}" alt="">
                     </div>
 
                     <div class="col-6 wow fadeIn" data-wow-delay="0.3s">
@@ -121,15 +121,21 @@
                 </h1>
 
                 <p class="mb-4">
-                    O SoliBank nasceu da vontade de aproximar quem quer ajudar de quem realmente precisa.
-                    Seus criadores perceberam que existiam muitas pessoas dispostas a doar, mas poucas maneiras seguras 
-                    e organizadas de fazer essa ajuda chegar ao destino certo.
-                </p>
+                    O SoliBank não nasceu de um projeto ou de uma grande estrutura — nasceu de uma necessidade sentida de perto. 
+                     Em diversas visitas de campo, seus idealizadores testemunharam algo que se repetia: famílias precisando de 
+                     apoio urgente, instituições sobrecarregadas e doadores querendo ajudar, mas sem saber como, para quem, 
+                    ou se sua contribuição realmente chegaria ao destino certo.
 
                 <p class="mb-5">
-                    Foi então que surgiu a ideia de criar uma plataforma simples, confiável e transparente, capaz de transformar solidariedade em impacto real.
-                    Assim, o SoliBank se tornou uma ponte entre esperança e ação, conectando generosidade a vidas que podem ser transformadas.
+                   Foi em uma reunião simples, ao redor de uma mesa emprestada numa pequena ONG comunitária, que surgiu uma pergunta: 
+                    <em>"E se existisse uma forma segura, transparente e organizada de conectar quem quer ajudar a quem precisa ser ajudado?"</em> 
+                    Dessa inquietação nasceu o SoliBank — como uma ponte entre solidariedade e impacto real.
                 </p>
+                    <p class="mb-5">
+                        A plataforma foi construída para dar voz a quem precisa, apoio a quem acolhe e confiança a quem doa. 
+                         Com responsabilidade, acompanhamento e compromisso, o SoliBank transforma boas intenções em mudanças concretas, 
+                        aproximando histórias, reconstruindo caminhos e fortalecendo comunidades inteiras.
+                    </p>
 
                 <div class="row g-3">
                     <div class="col-sm-6">
@@ -380,6 +386,102 @@
     </div>
 </section>
 <!-- Service End -->
+
+<!-- Funcionamento Start -->
+<section id="funcionamento" class="py-5">
+    <div class="container mt-5">
+
+        <!-- Título -->
+        <div class="text-center mb-5 wow fadeIn" data-wow-delay="0.1s">
+            <h1 class="mb-3">
+                <span class="text-uppercase text-primary bg-light px-2 rounded">Serviços</span> SoliBank
+            </h1>
+            <h4 class="text-muted">Como funciona o ciclo de cuidado com os alimentos</h4>
+        </div>
+
+        <!-- Linha 1 - Imagem esquerda / Texto direita -->
+        <div class="row align-items-center g-5 mb-5">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
+                <div class="overflow-hidden rounded shadow-sm">
+                    <img src="{% static 'img/image copy 2.png' %}" class="img-fluid" alt="Estoque de alimentos">
+                </div>
+            </div>
+
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.3s">
+                <h3 class="mb-3">
+                    Organização e Controle do Estoque
+                </h3>
+                <p>
+                    Os alimentos chegam diariamente por meio de doações de pessoas, empresas e campanhas comunitárias.
+                    Todo item recebido passa por triagem, registro e categorização para garantir segurança e qualidade.
+                </p>
+                <p class="mb-0">
+                    Nosso sistema controla validade, quantidade e prioridade de entrega, evitando desperdícios e 
+                    garantindo que cada alimento seja destinado com responsabilidade. 
+                </p>
+            </div>
+        </div>
+
+        <!-- Linha 2 - Texto esquerda / Imagem direita -->
+        <div class="row align-items-center g-5 flex-lg-row-reverse mb-5">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
+                <div class="overflow-hidden rounded shadow-sm">
+                    <img src="{% static 'img/image.png' %}" class="img-fluid" alt="Montagem das cestas">
+                </div>
+            </div>
+
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.3s">
+                <h3 class="mb-3">
+                    Montagem e Seleção das Cestas
+                </h3>
+                <p>
+                    Após a triagem, os alimentos são separados e organizados conforme as necessidades das famílias
+                    atendidas. Priorizamos equilíbrio nutricional, variedade e quantidade adequada por núcleo familiar.
+                </p>
+                <p class="mb-0">
+                    Cada cesta é montada com cuidado e revisada antes de sair do armazém para garantir que chegue 
+                    completa e em boas condições.
+                </p>
+            </div>
+        </div>
+
+        <!-- Linha 3 - Imagem esquerda / Texto direita -->
+        <div class="row align-items-center g-5 mb-5">
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.2s">
+                <div class="overflow-hidden rounded shadow-sm">
+                    <img src="{% static 'img/image copy.png' %}" class="img-fluid" alt="Entrega às famílias">
+                </div>
+            </div>
+
+            <div class="col-lg-6 wow fadeIn" data-wow-delay="0.3s">
+                <h3 class="mb-3">
+                    Destinação e Entrega às Famílias
+                </h3>
+                <p>
+                    Em parceria com assistentes sociais, CRAS, ONGs e instituições comunitárias, garantimos que cada
+                    cesta chegue exatamente a quem mais precisa.
+                </p>
+                <p class="mb-0">
+                    As entregas são acompanhadas e registradas, garantindo transparência, responsabilidade social
+                    e rastreabilidade de cada doação.
+                </p>
+            </div>
+        </div>
+
+        <!-- Linha 4 - Texto central -->
+        <div class="text-center mt-5 wow fadeIn" data-wow-delay="0.4s">
+            <h4 class="mb-3">Da doação ao cuidado</h4>
+            <p class="mx-auto" style="max-width: 700px;">
+                O SoliBank opera com compromisso e transparência em cada etapa do processo.  
+                Nossa missão é transformar generosidade em cuidado real, conectando doadores a vidas que precisam de
+                esperança, alimento e acolhimento.
+            </p>
+        </div>
+
+    </div>
+</section>
+<!-- funcionamento End s-->
+
 <!-- Team Start -->
 <div class="container-fluid bg-light py-5">
     <div class="container py-5">
@@ -394,7 +496,7 @@
             <div class="col-12 col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.1s">
                 <div class="team-item">
                     <img class="rounded-circle img-fluid shadow mb-3"
-                         src="img/team-1.jpg"
+                         src="{% static 'img/cras.jpg' %}"
                          style="width: 200px; height: 200px; object-fit: cover;" alt="">
                     <h4 class="text-dark">Atuação com o CRAS</h4>
                     <p>Atendimento às famílias em vulnerabilidade social.</p>
@@ -405,21 +507,10 @@
             <div class="col-12 col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.3s">
                 <div class="team-item">
                     <img class="rounded-circle img-fluid shadow mb-3"
-                         src="img/team-2.jpg"
+                         src="{% static 'img/CREAS.png' %}"
                          style="width: 200px; height: 200px; object-fit: cover;" alt="">
                     <h4 class="text-dark">Parceria com o CREAS</h4>
                     <p>Atendimento especializado a pessoas em risco.</p>
-                </div>
-            </div>
-
-            <!-- CARD 3 -->
-            <div class="col-12 col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.5s">
-                <div class="team-item">
-                    <img class="rounded-circle img-fluid shadow mb-3"
-                         src="img/team-3.jpg"
-                         style="width: 200px; height: 200px; object-fit: cover;" alt="">
-                    <h4 class="text-dark">ONGs Parceiras</h4>
-                    <p>Trabalho conjunto com projetos independentes.</p>
                 </div>
             </div>
 
@@ -427,13 +518,23 @@
             <div class="col-12 col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.7s">
                 <div class="team-item">
                     <img class="rounded-circle img-fluid shadow mb-3"
-                         src="img/team-4.jpg"
+                         src="{% static 'img/voluntarios.jpeg' %}"
                          style="width: 200px; height: 200px; object-fit: cover;" alt="">
                     <h4 class="text-dark">Rede de Voluntários</h4>
                     <p>A força que movimenta nosso projeto.</p>
                 </div>
             </div>
-
+             <!-- CARD 3 -->
+            <div class="col-12 col-sm-6 col-lg-3 wow fadeIn text-center" data-wow-delay="0.5s">
+                <div class="team-item">
+                    <img class="rounded-circle img-fluid shadow mb-3"
+                         src="{% static 'img/ongs.webp' %}"
+                         style="width: 200px; height: 200px; object-fit: cover;" alt="">
+                    <h4 class="text-dark">ONGs Parceiras</h4>
+                    <p>Trabalho conjunto com projetos independentes.</p>
+                </div>
+            </div>
+                                                                                                                                                                                    
         </div>
     </div>
 </div>

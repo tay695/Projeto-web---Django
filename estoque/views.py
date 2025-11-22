@@ -6,7 +6,7 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def listar_estoque(request):
-    items = Item.objects.all().order_by('nome', 'categoria', 'quantidade')
+    items = Item.objects.all().order_by('categoria', 'nome', 'quantidade')
     return render(request, 'estoque/listar_estoque.html', {'items': items})
 
 @login_required

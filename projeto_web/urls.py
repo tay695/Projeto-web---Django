@@ -18,11 +18,10 @@ Including another URLconf
 from operator import index
 from django.contrib import admin
 from django.urls import path, include
-from projeto_web.views import Index, dashboard
+from projeto_web.views import Index
 from projeto_web import views
 urlpatterns = [
     path('', Index, name='index'),
-    path('dashboard/', dashboard, name='dashboard'),
     path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
     path('estoque/', include('estoque.urls')),

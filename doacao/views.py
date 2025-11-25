@@ -2,11 +2,13 @@ from django.shortcuts import render, redirect
 from doacao.form import DoacaoForm
 from estoque.models import EntradaEstoque
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required, permission_required
 from doacao.models import Doacao
 from django.db.models import Count, Sum
 
+
 @login_required
+@permission_required('doacao.add_doacao')
 def criar_doacao(request):
     if request.method == "POST":
         form = DoacaoForm(request.POST)
@@ -19,6 +21,7 @@ def criar_doacao(request):
     return render(request, "doacao/criar_doacao.html", {"form": form})
 
 @login_required
+@permission_required('doacao.view_doacao')
 def dashboard_doacoes(request):
    
     
@@ -54,3 +57,27 @@ def dashboard_doacoes(request):
         'top_doadores': list(top_doadores),
     }
     return render(request, "doacao/dashboard_doacoes.html", context)
+
+@login_required
+@permission_required('doacao.change_doacao')
+def editar_doacao(request, id):
+    doacao = Doacao.objects.get(id=id)
+    if request.method == "POST":
+        form = DoacaoForm(request.POST, instance=doacao)
+        if form.is_valid():
+            form.save()  
+            return redirect("listar_estoque")
+    else:
+        form = DoacaoForm(instance=doacao)  
+        
+    return render(request, "doacao/editar_doacao.html", {"form": form, "doacao": doacao, 'action_type': 'edit_doacao'})
+
+@login_required
+@permission_required('doacao.delete_doacao')
+def deletar_doacao(request, id):
+    doacao = Doacao.objects.get(id=id)
+    if request.method == "POST":
+        doacao.delete()
+        return redirect("listar_estoque")
+    
+    return render(request, "doacao/confirmar_delete.html", {"doacao": doacao, 'action_type': 'delete_doacao'})

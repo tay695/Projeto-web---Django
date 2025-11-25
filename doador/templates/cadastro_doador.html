@@ -1,143 +1,280 @@
-{% extends "_base.html" %}
 {% load static %}
-
-{% block title %}
-    Cadastro de Doador | Plataforma de Doações
-{% endblock %}
-
-{% block extra_head %}
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        {% if action_type == 'delete_doador' %}Confirmar Exclusão
+        {% elif action_type == 'edit_doador' %}Editar Doador
+        {% else %}Cadastrar Doador
+        {% endif %} | SoliBank
+    </title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    
     <style>
-        .cadastro-wrapper {
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1b362e, #416358, #0f6e4a);
+            background-size: cover;
+            min-height: 100vh;
+            font-family: Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: calc(100vh - 200px);
-            padding: 2rem 0;
         }
-        .cadastro-card {
-            width: 100%;
-            max-width: 450px;
+
+        .doador-container {
+            width: 90%;
+            max-width: 1200px;
+            min-height: 550px;
+            background: rgba(255, 255, 255, 0.15);
+            display: flex;
+            backdrop-filter: blur(8px);
+            border-radius: 18px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.35);
+            margin: 2rem 0;
         }
-        .form-group {
-            margin-bottom: 1.5rem;
+        
+        .image-side {
+            background: #ffffff;
+            width: 40%;
+            background-image: url("{% static 'img/logo.png' %}");
+            background-size: 70%;
+            background-repeat: no-repeat;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .form-group label {
-            font-weight: 500;
-            margin-bottom: 0.5rem;
+
+        .form-side {
+            width: 60%;
+            background: #ffffff;
+            padding: 40px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+        
+        .form-side h4 {
+            font-size: 24px;
+            text-align: center;
+            margin-bottom: 5px;
+            color: #0c4a31;
+            font-weight: bold;
+        }
+        
+        .form-side p.subtitle {
+            text-align: center; 
+            color: #555; 
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        label {
+            font-weight: 600;
+            color: #345246;
+            margin-bottom: 5px;
             display: block;
-            color: #333;
         }
+        
+        .mb-3 {
+            margin-bottom: 1rem !important;
+        }
+        
         .form-control {
             width: 100%;
-            padding: 0.75rem;
-            border: 1px solid #ddd;
-            border-radius: 0.375rem;
-            font-size: 1rem;
+            margin-top: 6px;
+            margin-bottom: 0px;
+            border-radius: 6px;
+            border: 1px solid #b3ccb3;
+            padding: 10px;
+            transition: border-color 0.2s, box-shadow 0.2s;
         }
         .form-control:focus {
+            border-color: #146644;
+            box-shadow: 0 0 0 0.25rem rgba(20, 102, 68, 0.25);
             outline: none;
-            border-color: #007bff;
-            box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.15);
         }
-        .btn-actions {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            margin-top: 2rem;
+        
+        input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+            background-color: #fff;
+            background-clip: padding-box;
+            border: 1px solid #b3ccb3; 
+            border-radius: 6px;
+            padding: 10px;
+            width: 100%;
         }
-        .btn {
-            padding: 0.75rem 2.5rem;
-            font-weight: 500;
-            border-radius: 0.375rem;
-            cursor: pointer;
+
+
+        .btn-submit-custom {
+            background: #7ca897;
             border: none;
-            font-size: 1rem;
+            padding: 12px 20px;
+            border-radius: 6px;
+            color: white;
+            font-weight: bold;
+            transition: 0.2s;
+            cursor: pointer;
+            text-decoration: none;
         }
-        .btn-primary {
-            background-color: #007bff;
+        .btn-submit-custom:hover {
+            background: #146644;
             color: white;
         }
-        .btn-primary:hover {
-            background-color: #0056b3;
+
+        .btn-light {
+            background-color: #f8f9fa;
+            border: 1px solid #ced4da;
+            color: #212529;
+            padding: 12px 20px;
+            border-radius: 6px;
+            font-weight: bold;
+            text-decoration: none;
         }
-        .btn-secondary {
-            background-color: #6c757d;
-            color: white;
+        .btn-light:hover {
+            background-color: #e9ecef;
         }
-        .btn-secondary:hover {
-            background-color: #545b62;
-        }
-        .card-header {
+
+        .delete-message-box {
+            border: 1px dashed #d13a8b;
+            padding: 1rem;
+            border-radius: 0.5rem;
             text-align: center;
-            margin-bottom: 2rem;
         }
-        .card-header h4 {
-            font-size: 1.75rem;
-            margin: 0;
-            color: #333;
+        .form-error {
+            color: #7b0000;
+            font-size: 14px;
+            margin-top: 5px; 
+            margin-bottom: 0;
+            display: block;
         }
-        .card-header p {
-            margin: 0.5rem 0 0 0;
-            color: #666;
-            font-size: 0.95rem;
+        
+        @media (max-width: 992px) {
+            .doador-container {
+                width: 95%;
+                height: auto;
+                flex-direction: column;
+            }
+            .image-side {
+                display: none;
+            }
+            .form-side {
+                width: 100%;
+                padding: 30px;
+            }
         }
     </style>
-{% endblock %}
+</head>
+<body>
 
-{% block content %}
-<div class="page-header">
-    <h3 class="page-title">Cadastro de Doador</h3>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active">Novo Doador</li>
-        </ol>
-    </nav>
-</div>
+<div class="doador-container">
+    
+    <div class="image-side">
+    </div>
 
-<div class="cadastro-wrapper">
-    <div class="cadastro-card">
-        <div class="card">
-            <div class="card-body p-5">
-                <div class="card-header">
-                    <h4>Cadastro de Doador</h4>
-                    <p>Preencha os campos abaixo</p>
+    <div class="form-side">
+        
+        {% if action_type == 'delete_doador' %}
+                        
+            <h4 class="text-center">Excluir Doador: {{ doador.nome }}</h4>
+            <p class="subtitle">Confirme a exclusão do registro.</p>
+            
+            <form action="{% url 'delete_doador' doador.id %}" method="post">
+                {% csrf_token %}
+                
+                <div class="delete-message-box mb-4">
+                    <h5 class="text-danger mb-2">⚠️ Confirma a exclusão do registro de **{{ doador.nome }}**?</h5>
+                    <p class="mb-0 text-muted">Esta ação é irreversível.</p>
+                </div>
+                
+                <div class="d-flex justify-content-end gap-3 mt-4">
+                    <a href="{% url 'lista_doadores' %}" class="btn btn-light">Cancelar</a>
+                    <button type="submit" class="btn btn-danger btn-submit-custom">Deletar</button>
+                </div>
+            </form>
+
+        {% elif action_type == 'edit_doador' %}
+            
+            <h4 class="text-center">Editar Doador: {{ doador.nome }}</h4>
+            <p class="subtitle">Atualize os dados do doador.</p>
+            
+            <form action="{% url 'edit_doador' doador.id %}" method="post">
+                {% csrf_token %}
+                
+                {% for field in form %}
+                    <div class="mb-3">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                        {{ field }}
+                        
+                        {% if field.errors %}
+                            <div class="form-error">{{ field.errors }}</div>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+
+                <div class="d-flex justify-content-end gap-3 mt-4">
+                    <a href="{% url 'lista_doadores' %}" class="btn btn-light">Cancelar</a>
+                    <button type="submit" class="btn btn-submit-custom">Salvar Alterações</button>
+                </div>
+            </form>
+
+        {% else %}
+            
+            <h4 class="text-center">Cadastrar Doador</h4>
+            <p class="subtitle">Preencha os campos para transformar vidas.</p>
+            
+            <form action="{% url 'cadastro_doador' %}" method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label for="{{ form.nome.id_for_label }}">Nome Completo</label>
+                    {{ form.nome }} 
+                    {% if form.nome.errors %}
+                        <div class="form-error">{{ form.nome.errors }}</div>
+                    {% endif %}
                 </div>
 
-                <form method="POST" class="forms-sample">
-                    {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.email.id_for_label }}">E-mail</label>
+                    {{ form.email }}
+                    {% if form.email.errors %}
+                        <div class="form-error">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
 
-                    <div class="form-group">
-                        <label for="{{ form.nome.id_for_label }}">{{ form.nome.label }}</label>
-                        {{ form.nome }}
-                    </div>
+                <div class="mb-3">
+                    <label for="{{ form.telefone.id_for_label }}">Telefone</label>
+                    {{ form.telefone }}
+                    {% if form.telefone.errors %}
+                        <div class="form-error">{{ form.telefone.errors }}</div>
+                    {% endif %}
+                </div>
 
-                    <div class="form-group">
-                        <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
-                        {{ form.email }}
-                    </div>
+                <div class="mb-3">
+                    <label for="{{ form.endereco.id_for_label }}">Endereço</label>
+                    {{ form.endereco }}
+                    {% if form.endereco.errors %}
+                        <div class="form-error">{{ form.endereco.errors }}</div>
+                    {% endif %}
+                </div>
+                
+                <div class="d-flex justify-content-end gap-3 mt-4">
+                    <a href="{% url 'listar_doador' %}" class="btn btn-light">Cancelar</a>
+                    <button type="submit" class="btn btn-submit-custom">Adicionar Doador</button>
+                </div>
+            </form>
 
-                    <div class="form-group">
-                        <label for="{{ form.telefone.id_for_label }}">{{ form.telefone.label }}</label>
-                        {{ form.telefone }}
-                    </div>
-
-                    <div class="form-group">
-                        <label for="{{ form.endereco.id_for_label }}">{{ form.endereco.label }}</label>
-                        {{ form.endereco }}
-                    </div>
-
-                    <div class="btn-actions">
-                        <button type="submit" class="btn btn-primary">Cadastrar</button>
-                        <a href="/" class="btn btn-secondary">Cancelar</a>
-                    </div>
-                </form>
-            </div>
-        </div>
+        {% endif %}
+        
     </div>
 </div>
 
-{% endblock content %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-{% block extra_scripts %}
-{% endblock %}
+</body>
+</html>

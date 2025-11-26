@@ -7,31 +7,42 @@
         <span class="menu-title">Dashboard</span>
       </a>
     </li>
-<li class="nav-item">
+
+{% if request.user.is_superuser or 'estoque.view_item' in perms %}
+    <li class="nav-item">
    <a class="nav-link" href="{% url 'listar_estoque' %}">
     <i class="icon-grid menu-icon"></i>
     <span class="menu-title">Estoque</span>
   </a>
 </li>
+{% endif %}
+
+{% if request.user.is_superuser or 'entidade_beneficiada.view_entidadebeneficiada' %}
 <li class="nav-item">
    <a class="nav-link" href="{% url 'entidade_list' %}">
     <i class="icon-grid menu-icon"></i>
     <span class="menu-title">Destinario de doações</span>
   </a>
 </li>
+{% endif %}
+
+{% if request.user.is_user or 'doacao.add_doacao' in perms %}
 <li class="nav-item">
    <a class="nav-link" href="{% url 'criar_doacao' %}">
     <i class="icon-grid menu-icon"></i>
     <span class="menu-title">Registrar doação </span>
   </a>
 </li>
+{% endif %}
 
+{% if request.user.is_superuser or 'doador.view_doador' %}
 <li class="nav-item">
    <a class="nav-link" href="{% url 'listar_doador' %}"> 
     <i class="icon-grid menu-icon"></i>
     <span class="menu-title">Doadores</span>
   </a>
 </li>
+{% endif %}
 
     <li class="nav-item">
       <a class="nav-link" href="../../../docs/documentation.html">

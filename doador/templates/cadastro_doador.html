@@ -121,7 +121,7 @@
             outline: none;
         }
         
-        input[type="text"], input[type="email"], input[type="tel"], textarea, select {
+        input[type="text"], input[type="email"], input[type="tel"], input[type="password"], textarea, select {
             background-color: #fff;
             background-clip: padding-box;
             border: 1px solid #b3ccb3; 
@@ -174,6 +174,10 @@
             display: block;
         }
         
+        .cpf-cnpj-field.hidden {
+            display: none;
+        }
+
         @media (max-width: 992px) {
             .doador-container {
                 width: 95%;
@@ -204,7 +208,7 @@
             <h4 class="text-center">Excluir Doador: {{ doador.nome }}</h4>
             <p class="subtitle">Confirme a exclusão do registro.</p>
             
-            <form action="{% url 'delete_doador' doador.id %}" method="post">
+            <form action="{% url 'deletar_doador' doador.id %}" method="post">
                 {% csrf_token %}
                 
                 <div class="delete-message-box mb-4">
@@ -213,7 +217,7 @@
                 </div>
                 
                 <div class="d-flex justify-content-end gap-3 mt-4">
-                    <a href="{% url 'lista_doadores' %}" class="btn btn-light">Cancelar</a>
+                    <a href="{% url 'listar_doador' %}" class="btn btn-light">Cancelar</a>
                     <button type="submit" class="btn btn-danger btn-submit-custom">Deletar</button>
                 </div>
             </form>
@@ -223,7 +227,7 @@
             <h4 class="text-center">Editar Doador: {{ doador.nome }}</h4>
             <p class="subtitle">Atualize os dados do doador.</p>
             
-            <form action="{% url 'edit_doador' doador.id %}" method="post">
+            <form action="{% url 'editar_doador' doador.id %}" method="post">
                 {% csrf_token %}
                 
                 {% for field in form %}
@@ -238,7 +242,7 @@
                 {% endfor %}
 
                 <div class="d-flex justify-content-end gap-3 mt-4">
-                    <a href="{% url 'lista_doadores' %}" class="btn btn-light">Cancelar</a>
+                    <a href="{% url 'listar_doador' %}" class="btn btn-light">Cancelar</a>
                     <button type="submit" class="btn btn-submit-custom">Salvar Alterações</button>
                 </div>
             </form>
@@ -251,41 +255,105 @@
             <form action="{% url 'cadastro_doador' %}" method="post">
                 {% csrf_token %}
 
-                <div class="mb-3">
-                    <label for="{{ form.nome.id_for_label }}">Nome Completo</label>
-                    {{ form.nome }} 
-                    {% if form.nome.errors %}
-                        <div class="form-error">{{ form.nome.errors }}</div>
-                    {% endif %}
+                <div class="row">
+                    <div class="col-md-6">
+                        <h5 class="mb-3" style="color: #0c4a31;">Dados de Acesso</h5>
+                        
+                        <div class="mb-3">
+                            <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                            {{ form.username }} 
+                            {% if form.username.errors %}
+                                <div class="form-error">{{ form.username.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                            {{ form.email }}
+                            {% if form.email.errors %}
+                                <div class="form-error">{{ form.email.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.password1.id_for_label }}">{{ form.password1.label }}</label>
+                            {{ form.password1 }}
+                            {% if form.password.errors %}
+                                <div class="form-error">{{ form.password.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.password2.id_for_label }}">{{ form.password2.label }}</label>
+                            {{ form.password2 }}
+                            {% if form.password2.errors %}
+                                <div class="form-error">{{ form.password2.errors }}</div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h5 class="mb-3" style="color: #0c4a31;">Dados Pessoais/Empresariais</h5>
+
+                        <div class="mb-3" id="tipo-field">
+                            <label for="{{ form.tipo.id_for_label }}">{{ form.tipo.label }}</label>
+                            {{ form.tipo }}
+                            {% if form.tipo.errors %}
+                                <div class="form-error">{{ form.tipo.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="{{ form.nome.id_for_label }}">{{ form.nome.label }}</label>
+                            {{ form.nome }} 
+                            {% if form.nome.errors %}
+                                <div class="form-error">{{ form.nome.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3 cpf-cnpj-field" id="cpf-field">
+                            <label for="{{ form.cpf.id_for_label }}">{{ form.cpf.label }}</label>
+                            {{ form.cpf }}
+                            {% if form.cpf.errors %}
+                                <div class="form-error">{{ form.cpf.errors }}</div>
+                            {% endif %}
+                        </div>
+
+                        <div class="mb-3 cpf-cnpj-field" id="cnpj-field">
+                            <label for="{{ form.cnpj.id_for_label }}">{{ form.cnpj.label }}</label>
+                            {{ form.cnpj }}
+                            {% if form.cnpj.errors %}
+                                <div class="form-error">{{ form.cnpj.errors }}</div>
+                            {% endif %}
+                        </div>
+                        
+                        {% if form.telefone %}
+                            <div class="mb-3">
+                                <label for="{{ form.telefone.id_for_label }}">Telefone</label>
+                                {{ form.telefone }}
+                                {% if form.telefone.errors %}
+                                    <div class="form-error">{{ form.telefone.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+                        {% if form.endereco %}
+                            <div class="mb-3">
+                                <label for="{{ form.endereco.id_for_label }}">Endereço</label>
+                                {{ form.endereco }}
+                                {% if form.endereco.errors %}
+                                    <div class="form-error">{{ form.endereco.errors }}</div>
+                                {% endif %}
+                            </div>
+                        {% endif %}
+
+
+                    </div>
                 </div>
 
-                <div class="mb-3">
-                    <label for="{{ form.email.id_for_label }}">E-mail</label>
-                    {{ form.email }}
-                    {% if form.email.errors %}
-                        <div class="form-error">{{ form.email.errors }}</div>
-                    {% endif %}
-                </div>
-
-                <div class="mb-3">
-                    <label for="{{ form.telefone.id_for_label }}">Telefone</label>
-                    {{ form.telefone }}
-                    {% if form.telefone.errors %}
-                        <div class="form-error">{{ form.telefone.errors }}</div>
-                    {% endif %}
-                </div>
-
-                <div class="mb-3">
-                    <label for="{{ form.endereco.id_for_label }}">Endereço</label>
-                    {{ form.endereco }}
-                    {% if form.endereco.errors %}
-                        <div class="form-error">{{ form.endereco.errors }}</div>
-                    {% endif %}
-                </div>
-                
                 <div class="d-flex justify-content-end gap-3 mt-4">
                     <a href="{% url 'listar_doador' %}" class="btn btn-light">Cancelar</a>
-                    <button type="submit" class="btn btn-submit-custom">Adicionar Doador</button>
+                    <button type="submit" class="btn btn-submit-custom">Finalizar Cadastro</button>
                 </div>
             </form>
 
@@ -295,6 +363,32 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const tipoSelect = document.getElementById('id_tipo');
+        const cpfField = document.getElementById('cpf-field');
+        const cnpjField = document.getElementById('cnpj-field');
+
+        function AlterarCampo() {
+            const selectedType = tipoSelect.value;
+
+            if (selectedType === 'PF') {
+                cpfField.classList.remove('hidden');
+                cnpjField.classList.add('hidden');
+                cnpjField.querySelector('input, textarea').value = ''; 
+            } else if (selectedType === 'PJ') {
+                cpfField.classList.add('hidden');
+                cnpjField.classList.remove('hidden');
+                cpfField.querySelector('input, textarea').value = ''; 
+            }
+        }
+
+        AlterarCampo(); 
+
+        tipoSelect.addEventListener('change', AlterarCampo);
+    });
+</script>
 
 </body>
 </html>

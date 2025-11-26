@@ -1,0 +1,71 @@
+{% extends "_base.html" %}
+{% load static %}
+
+{% block title %}Perfil do Doador - {{ doador.nome }}{% endblock %}
+
+{% block content %}
+<div class="page-header">
+    <h3 class="page-title">
+        <i class="ti-user"></i> Perfil do Doador
+    </h3>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active">{{ doador.nome }}</li>
+        </ol>
+    </nav>
+</div>
+
+<div class="row">
+    <div class="col-lg-8 mx-auto grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="row mb-4">
+                    <div class="col-md-12">
+                        <h4 class="card-title">{{ doador.nome }}</h4>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <p>
+                            <strong>Email:</strong><br>
+                            <span class="text-muted">{{ doador.email }}</span>
+                        </p>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <p>
+                            <strong>Telefone:</strong><br>
+                            <span class="text-muted">{{ doador.telefone|default:"Não informado" }}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <p>
+                            <strong>Endereço:</strong><br>
+                            <span class="text-muted">{{ doador.endereco|default:"Não informado" }}</span>
+                        </p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="row">
+                    <div class="col-md-12 mb-3">
+                        <p><strong>Data de Cadastro:</strong> {{ doador.data_cadastro|date:"d/m/Y H:i" }}</p>
+                    </div>
+                </div>
+
+                <div class="mt-4 d-flex gap-2">
+                    <a href="" class="btn btn-primary">
+                        <i class="ti-arrow-left"></i> Voltar
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

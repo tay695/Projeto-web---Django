@@ -168,9 +168,10 @@
 </div>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+{{ por_categoria|json_script:"por_categoria_data" }}
 <script>
   
-    const categoriaData = {{ por_categoria|safe }}; 
+    const categoriaData = JSON.parse(document.getElementById('por_categoria_data').textContent);
     const categoriaLabels = categoriaData.map(item => {
         const categorias = {
             'AL': 'Alimentos',

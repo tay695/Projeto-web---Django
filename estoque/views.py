@@ -5,7 +5,7 @@ from estoque.models import Item
 from django.contrib.auth.decorators import login_required, permission_required
 
 @login_required
-@permission_required('estoque.view_item', raise_exception=True)
+@permission_required('estoque.view_item')
 def listar_estoque(request):
     items = Item.objects.all().order_by('categoria', 'nome', 'quantidade')
     return render(request, 'estoque/listar_estoque.html', {'items': items})

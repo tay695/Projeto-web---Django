@@ -23,6 +23,7 @@ from projeto_web import views
 urlpatterns = [
     path('', Index, name='index'),
     path('admin/', admin.site.urls),
+    path('pontos/', include('ponto_coleta.urls')),
     path('accounts/', include('django.contrib.auth.urls')),
     path('estoque/', include('estoque.urls')),
     path('entidades/', include('entidade_beneficiada.urls')),

@@ -26,6 +26,14 @@
 </li>
 {% endif %}
 
+{% if request.user.is_superuser %}
+<li class="nav-item">
+    <a class="nav-link" href="{% url 'ponto_full_list' %}"> 
+        <i class="icon-grid menu-icon"></i> <span class="menu-title">Pontos de Coleta</span>
+    </a>
+</li>
+{% endif %}
+
 {% if request.user.is_user or 'doacao.add_doacao' in perms %}
 <li class="nav-item">
    <a class="nav-link" href="{% url 'criar_doacao' %}">

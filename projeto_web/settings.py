@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'estoque',
     'entidade_beneficiada',
+    'ponto_coleta',
     'doador',
     'doacao'
 ] 

@@ -1,96 +1,113 @@
-SoliBank
-Objetivo do Sistema
-O SoliBank é um sistema web voltado para o gerenciamento de doações, organizando o fluxo entre doadores, estoque interno e entidades beneficiadas (famílias e ONGs).
-O objetivo é registrar doações, controlar entradas e saídas no estoque e facilitar o trabalho do assistente social na gestão da logística.
+🌱 SoliBank
 
-Arquitetura do Sistema 
+O SoliBank é uma plataforma web desenvolvida para facilitar o gerenciamento de doações, oferecendo um fluxo claro entre doadores, estoque interno e entidades beneficiadas.
+O sistema organiza todo o processo: desde o envio da doação, passando pela coleta, até sua destinação final para famílias e ONGs.
+
+🎯 Objetivo do Sistema
+
+O SoliBank tem como propósito:
+
+Registrar doações realizadas por usuários doadores;
+
+Controlar entradas e saídas de itens no estoque;
+
+Apoiar o trabalho do Assistente Social na organização e distribuição das doações;
+
+Manter histórico e transparência de todas as movimentações.
+
+🧩 Arquitetura do Sistema
 1. doador
-Responsável pela interação do doador com o sistema.
-Funções:
-Cadastro e login do doador
-Envio de doações por formulário
-Informar ponto de coleta
-Acompanhar o status da doação (coletada ou não)
-Visualizar suas doações e informações gerais permitidas
+
+Módulo responsável pela interação do doador com o sistema.
+Funcionalidades:
+
+Cadastro e login;
+
+Envio de doações por formulário;
+
+Informar ponto de coleta;
+
+Acompanhar o status da doação (coletada ou não);
+
+Visualizar histórico e informações permitidas.
 
 2. estoque
 
-Módulo que controla e armazena os itens doados.
-Funções:
+Módulo central para o controle das doações recebidas.
+Funcionalidades:
 
-Registrar entradas (quando a doação é coletada)
+Registrar entradas (doações coletadas);
 
-Registrar saídas (quando os itens são destinados a uma entidade beneficiada)
+Registrar saídas (destinadas às entidades beneficiadas);
 
-Listar itens e acompanhar quantidades
+Listar itens e acompanhar quantidades disponíveis.
 
-Fluxo básico:
+Fluxo básico do estoque:
 
-Doação enviada → status pendente
+Doação enviada → fica pendente
 
-Assistente Social marca como coletada → gera entrada no estoque
+Assistente Social coleta → gera entrada no estoque
 
 3. entidade_beneficiada
 
-Acesso exclusivo do Assistente Social.
-Funções:
+Acesso exclusivo para o Assistente Social.
+Funcionalidades:
 
-Cadastro de famílias e ONGs beneficiadas
+Cadastro de famílias e ONGs beneficiadas;
 
-Atualização e remoção de registros
+Atualização, consulta e remoção de registros;
 
-Consulta do histórico de itens recebidos
+Visualização do histórico de itens recebidos.
 
 4. doacao
 
-App auxiliar para organização das doações.
-Funções:
+App auxiliar que organiza e vincula as doações aos demais módulos.
+Funcionalidades:
 
-Registrar a doação enviada pelo doador
+Registrar todas as doações enviadas pelos usuários;
 
-Associar a doação às movimentações de estoque
+Controlar status da coleta;
 
-Controlar o status de coleta
+Relacionar doações às movimentações do estoque.
 
-Perfis do Sistema
+👥 Perfis do Sistema
 Assistente Social (Superusuário)
 
-Gerencia entidades beneficiadas
+Gerencia entidades beneficiadas;
 
-Controla entradas e saídas no estoque
-Atualiza o status das doações (coletada / não coletada)
+Controla entradas e saídas do estoque;
 
-Organiza a logística interna do sistema
+Atualiza o status das doações (coletada/não coletada);
+
+Administra a logística interna do sistema.
 
 Doador (Usuário Comum)
 
-Realiza cadastro e login
+Realiza cadastro e login;
 
-Envia doações
+Envia doações via formulário;
 
-Informa ponto de coleta
+Informa o ponto de coleta;
 
-Acompanha a situação da própria doação
+Acompanha o status da própria doação;
 
-Tem acesso somente às funcionalidades destinadas ao doador
+Acessa apenas funcionalidades relacionadas ao seu perfil.
 
-Fluxo do Sistema
+🔄 Fluxo do Sistema
 
-O doador envia uma doação por meio de um formulário (com possibilidade de se cadastrar no processo).
+O doador envia a doação pelo formulário e informa o ponto de coleta.
 
-Informa o ponto de coleta e os detalhes da doação.
+A doação fica registrada como pendente.
 
-A doação fica registrada como pendente de coleta.
+O Assistente Social verifica e atualiza o status da coleta.
 
-O Assistente Social verifica e atualiza o status da doação.
+Se coletada, gera uma entrada no estoque.
 
-Quando marcada como coletada, a doação gera uma entrada no estoque.
+O Assistente Social destina os itens a famílias ou ONGs, registrando uma saída.
 
-O Assistente Social destina os itens a famílias ou ONGs, registrando uma saída no estoque.
+Todo o processo fica registrado no histórico do sistema.
 
-O histórico completo do fluxo fica registrado no sistema.
-
-Instruções de Execução
+🛠️ Instruções de Execução
 Pré-requisitos
 
 Python 3.8+
@@ -99,13 +116,13 @@ Django 4.x
 
 Git (opcional)
 
-Passos para rodar o projeto
+Passos para execução
 
 Clonar o repositório
 
-Criar migrações e migrar o banco
+Aplicar as migrações do Django
 
-Criar um superusuário (perfil de Assistente Social)
+Criar um superusuário (Assistente Social)
 
 Executar o servidor:
 
@@ -116,12 +133,18 @@ Acessar no navegador:
 
 http://127.0.0.1:8000
 
-ṕara melhores informações acesse a documentação oficial do Django https://www.djangoproject.com/
 
-desenvolvedores full stack
+Para mais detalhes sobre comandos, configurações e boas práticas, consulte a documentação oficial do Django:
+🔗 https://www.djangoproject.com/
+
+💻 Desenvolvedoras Full Stack
+
 Jéssica Tainá
+
 Maria Clara
+
 Tainara Amaral
 
-Vídeo de Apresentação do sitemas
+🎥 Vídeo de Apresentação do Sistema
+
 (Adicionar link posteriormente.)

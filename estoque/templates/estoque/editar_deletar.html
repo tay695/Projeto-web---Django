@@ -3,6 +3,7 @@
 {% block content %}
 <h2>
     {% if acao == 'editar' %}Editar Item{% else %}Excluir Item{% endif %}
+    {% endif %}
 </h2>
 
 <form method="POST" 
@@ -25,6 +26,7 @@
         <div class="mb-3">
             <label for="quantidade" class="form-label">Quantidade</label>
             <input type="number" class="form-control" id="quantidade" name="quantidade" value="{{ item.quantidade }}" required>
+            
         </div>
         <button type="submit" class="btn btn-success">Salvar alterações</button>
     {% else %}
@@ -33,4 +35,5 @@
         <a href="{% url 'listar_estoque' %}" class="btn btn-secondary">Cancelar</a>
     {% endif %}
 </form>
+
 {% endblock %}

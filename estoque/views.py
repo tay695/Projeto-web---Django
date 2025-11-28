@@ -1,8 +1,12 @@
 from django.shortcuts import get_object_or_404, redirect, render
+from httpcore import request
 #from httpcore import request
 from doacao.models import Doacao
 from estoque.models import Item
 from django.contrib.auth.decorators import login_required, permission_required
+
+def is_doador(user):
+    return user.groups.filter(name='DOADORES').exists()
 
 @login_required
 @permission_required('estoque.view_item')
@@ -13,6 +17,8 @@ def listar_estoque(request):
 @login_required
 @permission_required('estoque.view_item', raise_exception=True)
 def adicionar_estoque(request):
+    if request.user.groups.filter(name='DOADORES').exists():
+        return redirect('listar_estoque')
     if request.method == 'POST':
         nome = request.POST.get('nome')
         quantidade = int(request.POST.get('quantidade'))
@@ -33,6 +39,8 @@ def adicionar_estoque(request):
 @login_required
 @permission_required('estoque.view_item', raise_exception=True)
 def editar_item(request, item_id):
+    if request.user.groups.filter(name='DOADORES').exists():
+        return redirect('listar_estoque')
     item = get_object_or_404(Item, id=item_id)
 
     if request.method == 'POST':
@@ -48,6 +56,8 @@ def editar_item(request, item_id):
 @login_required
 @permission_required('estoque.view_item', raise_exception=True)
 def deletar_item(request, item_id):
+    if request.user.groups.filter(name='DOADORES').exists():
+        return redirect('listar_estoque')
     item = get_object_or_404(Item, id=item_id)
     if request.method == 'POST':
         item.delete()

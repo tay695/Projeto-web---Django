@@ -58,7 +58,6 @@ Assistente Social (Superusuário)
 Gerencia entidades beneficiadas
 
 Controla entradas e saídas no estoque
-
 Atualiza o status das doações (coletada / não coletada)
 
 Organiza a logística interna do sistema
@@ -116,6 +115,7 @@ python manage.py runserver
 Acessar no navegador:
 
 http://127.0.0.1:8000
+
 ṕara melhores informações acesse a documentação oficial do Django https://www.djangoproject.com/
 
 desenvolvedores full stack

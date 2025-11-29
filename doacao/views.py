@@ -1,5 +1,5 @@
-from django.shortcuts import render, redirect
-from doacao.form import DoacaoForm
+from django.shortcuts import get_object_or_404, render, redirect
+from doacao.forms import DoacaoForm
 from estoque.models import EntradaEstoque
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
@@ -23,13 +23,10 @@ def criar_doacao(request):
 @login_required
 @permission_required('doacao.view_doacao')
 def dashboard_doacoes(request):
-   
-    
     stats = Doacao.objects.aggregate(
         total_doacoes=Count('id'),
         total_quantidade=Sum('quantidade'),
     )
-    
     por_categoria = (
         Doacao.objects
         .values('categoria')
@@ -71,6 +68,15 @@ def editar_doacao(request, id):
         form = DoacaoForm(instance=doacao)  
         
     return render(request, "doacao/editar_doacao.html", {"form": form, "doacao": doacao, 'action_type': 'edit_doacao'})
+
+@login_required
+def confirmar_coleta(request, id):
+    doacao = get_object_or_404(Doacao, id=id)
+
+    doacao.coletada = True
+    doacao.save()  # aqui o estoque é atualizado automaticamente!
+
+    return redirect('dashboard_doacoes')
 
 @login_required
 @permission_required('doacao.delete_doacao')

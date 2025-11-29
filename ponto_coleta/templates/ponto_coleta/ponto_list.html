@@ -3,25 +3,72 @@
 {% block title %}Gerenciar Pontos de Coleta{% endblock %}
 
 {% block content %}
+<style>
+
+    /* Novo estilo para a tabela principal de Pontos de Coleta */
+    .pontos-coleta-table {
+        border-left: 5px solid #28a745; 
+    }
+
+    /* Estilo para a tabela de doações aninhada */
+    .doacoes-container {
+        margin: 10px 0 15px 0;
+        padding: 10px;
+        background-color: #f8f9fa; 
+        border-radius: .25rem;
+    }
+
+    .doacoes-table {
+        margin-top: 10px; 
+    }
+
+    /* Cabeçalho da tabela de doações */
+    .doacoes-table thead th {
+        background-color: #e2f0e4; 
+        color: #1e7e34; /* Ajustado para um verde escuro para melhor contraste */
+        border-bottom: 2px solid #28a745; /* Ajustado para o verde principal */
+        font-weight: 600;
+        padding: .75rem;
+    }
+
+    /* Linhas de Status */
+    .doacao-coletada-row {
+        background-color: #f7fcf8; 
+        color: #6c757d; 
+    }
+
+    /* Ajuste para células da tabela principal */
+    .table td {
+        vertical-align: middle;
+    }
+</style>
+
 <div class="row">
     <div class="col-lg-12 grid-margin stretch-card">
         <div class="card">
             <div class="card-body">
-                <h4 class="card-title">Gerenciamento de Pontos de Coleta</h4>
-                <p class="card-description">
-                    <a href="{% url 'ponto_create' %}" class="btn btn-primary btn-sm">
-                        <i class="mdi mdi-plus"></i> Novo Ponto
+                <h4 class="card-title text-center">Gerenciamento de Pontos de Coleta</h4>
+
+                <p class="text-muted text-center mb-2">
+                    Lista completa de pontos de coleta cadastrados no sistema.
+                </p>
+
+                <p class="text-right mb-4">
+                    <a href="{% url 'ponto_create' %}" class="btn btn-success btn-icon-text">
+                        <i class="mdi mdi-plus-circle-outline"></i> 
+                        Novo Ponto
                     </a>
                 </p>
+
                 <div class="table-responsive">
-                    <table class="table table-striped">
+                    <table class="table table-striped pontos-coleta-table">
                         <thead>
                             <tr>
                                 <th>Nome</th>
                                 <th>Endereço</th>
-                                <th>Status</th>
+                                <th>Situação</th>
                                 <th>Data Cadastro</th>
-                                <th>Ações</th>
+                                <th>Controle</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -43,9 +90,52 @@
                                     <a href="{% url 'ponto_delete' ponto.pk %}" class="btn btn-danger btn-xs" title="Excluir"><i class="mdi mdi-delete"></i></a>
                                 </td>
                             </tr>
-                            {% empty %}
+                            
                             <tr>
-                                <td colspan="5">Nenhum ponto de coleta cadastrado.</td>
+                                <td colspan="5" style="border-top: none; padding: 0 10px 20px 10px;">
+                                    <div class="doacoes-container">
+                                        <strong>Doações vinculadas:</strong>
+                                        
+                                        <table class="table table-sm doacoes-table">
+                                            <thead>
+                                                <tr>
+                                                    <th style="width: 45%;">Item e Quantidade</th>
+                                                    <th style="width: 20%;">Doador</th>
+                                                    <th style="width: 15%;" class="text-center">Situação</th>
+                                                    <th style="width: 20%;" class="text-center">Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {% for doacao in ponto.doacao_set.all %}
+                                                <tr class="{% if doacao.coletada %}doacao-coletada-row{% endif %}">
+                                                    <td>
+                                                        {{ doacao.nome }} — **{{ doacao.quantidade }} {{ doacao.unidade_medida }}**
+                                                    </td>
+                                                    <td>{{ doacao.doador }}</td>
+                                                    <td class="text-center">
+                                                        {% if not doacao.coletada %}
+                                                            <span class="badge badge-warning text-dark">Pendente</span>
+                                                        {% else %}
+                                                            <span class="badge badge-success">Coletada</span>
+                                                        {% endif %}
+                                                    </td>
+                                                    <td class="text-center">
+                                                        {% if not doacao.coletada and user.is_superuser %}
+                                                            <a href="{% url 'confirmar_doacao' doacao.pk %}" class="btn btn-sm btn-success">
+                                                                <i class="mdi mdi-check"></i> Confirmar
+                                                            </a>
+                                                        {% endif %}
+                                                    </td>
+                                                </tr>
+                                                {% empty %}
+                                                    <tr>
+                                                        <td colspan="4" class="text-center text-muted">Nenhuma doação vinculada a este ponto.</td>
+                                                    </tr>
+                                                {% endfor %}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                         </tbody>

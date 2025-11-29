@@ -62,3 +62,19 @@ def ponto_full_list(request):
     pontos = PontoColeta.objects.all().order_by('nome') 
     context = {'pontos': pontos}
     return render(request, 'ponto_coleta/ponto_list.html', context)
+
+@login_required
+@user_passes_test(is_assistente_social)
+def confirmar_coleta(request, pk):
+    ponto = get_object_or_404(PontoColeta, pk=pk)
+    ponto.coletado = True
+    ponto.save()
+    return redirect('ponto_full_list')
+
+@login_required
+@user_passes_test(is_assistente_social)
+def confirmar_doacao(request, doacao_pk):
+    doacao = get_object_or_404(doacao, pk=doacao_pk)
+    doacao.coletada = True
+    doacao.save()
+    return redirect('ponto_full_list')

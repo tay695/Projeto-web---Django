@@ -121,7 +121,7 @@
                                                     </td>
                                                     <td class="text-center">
                                                         {% if not doacao.coletada and user.is_superuser %}
-                                                            <a href="{% url 'confirmar_doacao' doacao.pk %}" class="btn btn-sm btn-success">
+                                                            <a href="{% url 'confirmar_coleta' doacao.pk %}" class="btn btn-sm btn-success">
                                                                 <i class="mdi mdi-check"></i> Confirmar
                                                             </a>
                                                         {% endif %}

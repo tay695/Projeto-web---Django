@@ -20,3 +20,5 @@ class DoacaoForm(forms.ModelForm):
         self.fields['ponto_coleta'].queryset = PontoColeta.objects.filter(status='ATIVO')
 
         self.fields['ponto_coleta'].empty_label = "O doador levará até o local"
+        self.fields['ponto_coleta'].empty_label = "Solicitação para que um respostável da solibank busque a doação"
+

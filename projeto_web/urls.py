@@ -20,7 +20,10 @@ from django.contrib import admin
 from django.urls import path, include
 from projeto_web.views import Index
 from projeto_web import views
+from django.contrib.auth import views as auth_views
+
 urlpatterns = [
+    path('accounts/', include('django.contrib.auth.urls')),
     path('', Index, name='index'),
     path('admin/', admin.site.urls),
     path('pontos/', include('ponto_coleta.urls')),
@@ -29,4 +32,6 @@ urlpatterns = [
     path('entidades/', include('entidade_beneficiada.urls')),
     path('doador/', include('doador.urls')),
     path('doacao/', include('doacao.urls')),
+    path('sair/', auth_views.LogoutView.as_view(), name='logout'), 
+
 ]

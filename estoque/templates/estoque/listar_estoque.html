@@ -1,9 +1,60 @@
 {% extends "_base.html" %}
 
+{% load static %}
+
 {% block content %}
+<style>
+    body {
+        margin:0;
+        padding:0;
+        min-height:100vh;
+        font-family:Arial, sans-serif;
+        background-color: #f0f0f0; 
+    }
+
+    .container {
+        padding-top: 40px;
+        padding-bottom: 40px;
+        background-color: #fff;
+        border-radius: 18px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.1);
+    }
+    
+    .table-responsive .table {
+        background-color: #f7fcf8 ;
+        border: 1px solid #e2f0e4;
+    }
+
+    .table thead {
+        background-color: #0f6e4a ;
+        color: #fff;
+    }
+
+    .table thead th {
+        background-color: #f0f7f0 ;
+        color: #070404;
+    }
+
+    h2, h4 {
+        color: #0c4a31;
+    }
+
+    tbody tr:hover {
+        background-color: #e2f0e4 ;
+    }
+
+    .btn-info { background-color: #3b8e4e; border-color: #3b8e4e; color: #fff; }
+    .btn-info:hover { background-color: #2e6f3d ; border-color: #2e6f3d ; }
+
+    .btn-warning { background-color: #f3a342; border-color: #f3a342; color: #fff; }
+    .btn-warning:hover { background-color: #e0933c ; border-color: #e0933c ; }
+
+    .btn-danger { background-color: #d64949; border-color: #d64949; color: #fff; }
+    .btn-danger:hover { background-color: #c73a3a ; border-color: #c73a3a ; }
+</style>
+
 <div class="container my-5">
-    <!-- Cabeçalho simples -->
-     <title>Estoque</title>
+    <title>Estoque</title>
     <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Estoque </h2>
     </div>
@@ -13,8 +64,8 @@
     {% for categoria in categorias %}
     <h4 class="mt-5 mb-3">{{ categoria.grouper }}</h4>
     <div class="table-responsive shadow-sm rounded">
-        <table class="table align-middle text-center mb-0" style="background-color: #dbc8c8; border-radius: 8px; overflow: hidden;">
-            <thead style="background-color: #9fc6ce;">
+        <table class="table align-middle text-center mb-0" style="border-radius: 8px; overflow: hidden;">
+            <thead>
                 <tr>
                     <th>ID</th>
                     <th>Nome</th>
@@ -51,37 +102,4 @@
     {% endfor %}
 </div>
 
-<!-- Estilo personalizado -->
-<style>
-    /* Hover suave nas linhas */
-    tbody tr:hover {
-        background-color: #e0f7fa;
-    }
-
-    /* Botões hover */
-    .btn-success:hover {
-        background-color: #b3d8c4 !important;
-        border-color: #a9d1bb !important;
-    }
-
-    .btn-info:hover {
-        background-color: #90e0ef !important;
-        border-color: #90e0ef !important;
-    }
-
-    .btn-warning:hover {
-        background-color: #b5e6c6 !important;
-        border-color: #bed8c7 !important;
-    }
-
-    .btn-danger:hover {
-        background-color: #d6807a !important;
-        border-color: #e0aaa5 !important;
-    }
-
-    /* Cabeçalho das categorias */
-    h4 {
-        color: #6f8db8;
-    }
-</style>
 {% endblock %}

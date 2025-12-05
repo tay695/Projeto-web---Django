@@ -23,9 +23,9 @@ def criar_doacao(request):
             if not user_is_admin:
                 try:
                     doador_logado = Doador.objects.get(usuario=request.user)
-                    doacao.doador = doador_logado.nome
+                    doacao.doador = doador_logado
                 except Doador.DoesNotExist:
-                    return redirect('url_para_registro_de_doador')
+                    return redirect('criar_doacao')
             doacao.save()
             
             if user_is_admin:

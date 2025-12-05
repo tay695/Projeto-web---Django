@@ -5,19 +5,34 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required, permission_required
 from doacao.models import Doacao
 from django.db.models import Count, Sum
+from doador.models import Doador
 
+def is_assistente_social(user):
+    return user.is_superuser
 
 @login_required
 @permission_required('doacao.add_doacao')
 def criar_doacao(request):
+    user_is_admin = is_assistente_social(request.user)
+    
     if request.method == "POST":
-        form = DoacaoForm(request.POST)
+        form = DoacaoForm(request.POST, is_assistente_social=user_is_admin)
         if form.is_valid():
-            form.save()  
-            return redirect("listar_estoque")
+            doacao = form.save(commit=False)
+            if not user_is_admin:
+                try:
+                    doador_logado = Doador.objects.get(usuario=request.user)
+                    doacao.doador = doador_logado
+                except Doador.DoesNotExist:
+                    return redirect('url_para_registro_de_doador')
+            doacao.save()
+            
+            if user_is_admin:
+                return redirect("listar_estoque")
+            else:
+                return redirect("dashboard_doacoes")
     else:
-        form = DoacaoForm()
-
+        form = DoacaoForm(is_assistente_social=user_is_admin)
     return render(request, "doacao/criar_doacao.html", {"form": form})
 
 @login_required

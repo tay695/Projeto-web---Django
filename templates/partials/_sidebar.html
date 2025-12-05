@@ -17,7 +17,7 @@
 </li>
 {% endif %}
 
-{% if request.user.is_superuser or 'entidade_beneficiada.view_entidadebeneficiada' in perms %}
+{% if request.user.is_superuser or 'entidade_beneficiada.view_entidadebeneficiada' %}
 <li class="nav-item">
    <a class="nav-link" href="{% url 'entidade_list' %}">
     <i class="icon-grid menu-icon"></i>
@@ -26,9 +26,9 @@
 </li>
 {% endif %}
 
-{% if request.user.is_superuser or 'ponto_coleta.view_pontocoleta' in perms %}
+{% if request.user.is_superuser  %}
 <li class="nav-item">
-    <a class="nav-link" href="{% url 'ponto_list_doador' %}"> 
+    <a class="nav-link" href="{% url 'ponto_full_list' %}"> 
         <i class="icon-grid menu-icon"></i> <span class="menu-title">Pontos de Coleta</span>
     </a>
 </li>
@@ -43,16 +43,7 @@
 </li>
 {% endif %}
 
-{% if request.user.is_authenticated and request.user.doador %}
-      <li class="nav-item">
-       <a class="nav-link" href="{% url 'perfil_doador' id=request.user.doador.id %}">
-        <i class="icon-user menu-icon"></i>
-        <span class="menu-title">Meu Perfil</span>
-      </a>
-    </li>
-{% endif %}
-
-{% if request.user.is_superuser or 'doador.view_doador' in perms %}
+{% if request.user.is_superuser or 'doador.view_doador' %}
 <li class="nav-item">
    <a class="nav-link" href="{% url 'listar_doador' %}"> 
     <i class="icon-grid menu-icon"></i>
@@ -60,13 +51,25 @@
   </a>
 </li>
 {% endif %}
-    <li class="nav-item">
-   <a class="nav-link" href="{% url 'logout' %}">
-    <i class="icon-grid menu-icon"></i>
-    <span class="menu-title">Sair</span>
-  </a>
+
+<li class="nav-item">
+  <form action="{% url 'logout' %}" method="post" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" class="nav-link"style="background: none; border: none; width: 100%; text-align: left;">
+      <i class="icon-grid menu-icon"></i>
+      <span class="menu-title">Sair</span>
+    </button>
+  </form>
 </li>
 
+    <li class="nav-item">
+      <a class="nav-link" href="../../../docs/documentation.html">
+        <i class="icon-paper menu-icon"></i>
+        <span class="menu-title">Documentation</span>
+      </a>
+    </li>
+  </ul>
+</nav>
     <li class="nav-item">
       <a class="nav-link" href="../../../docs/documentation.html">
         <i class="icon-paper menu-icon"></i>

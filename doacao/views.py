@@ -15,6 +15,7 @@ def is_assistente_social(user):
 def criar_doacao(request):
     user_is_admin = is_assistente_social(request.user)
     
+    
     if request.method == "POST":
         form = DoacaoForm(request.POST, is_assistente_social=user_is_admin)
         if form.is_valid():
@@ -22,7 +23,7 @@ def criar_doacao(request):
             if not user_is_admin:
                 try:
                     doador_logado = Doador.objects.get(usuario=request.user)
-                    doacao.doador = doador_logado
+                    doacao.doador = doador_logado.nome
                 except Doador.DoesNotExist:
                     return redirect('url_para_registro_de_doador')
             doacao.save()

@@ -23,8 +23,7 @@ class Doacao(models.Model):
         blank=True
     )
 
-    doador = models.ForeignKey(
-        "doador.Doador", on_delete=models.SET_NULL, null=True,)
+    doador = models.CharField(max_length=100, null=True, blank=True)
     
     data_doacao = models.DateTimeField(auto_now_add=True)
 

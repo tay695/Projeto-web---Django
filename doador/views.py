@@ -6,7 +6,7 @@ from .forms import CadastroDoadorForm, EditarDoadorForm
 from .models import Doador
 from django.contrib.auth import login
 from django.core.exceptions import PermissionDenied
-from django.contrib.auth.models import Group # Importe o Group para atribuição de permissão
+from django.contrib.auth.models import Group 
 
 
 @login_required
@@ -32,17 +32,6 @@ def cadastro_doador(request):
         if form.is_valid():
             
             new_user = form.save() 
-            
-            Doador.objects.create(
-                usuario=new_user, 
-                nome=form.cleaned_data.get('nome'),
-                tipo=form.cleaned_data.get('tipo'),
-                cpf=form.cleaned_data.get('cpf'),
-                cnpj=form.cleaned_data.get('cnpj'),
-                email=form.cleaned_data.get('email'),
-                telefone=form.cleaned_data.get('telefone'),
-                endereco=form.cleaned_data.get('endereco')
-            )
             
             try:
                 doador_group = Group.objects.get(name='Doador')

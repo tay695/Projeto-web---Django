@@ -29,10 +29,7 @@
       <span class="icon-menu"></span>
     </button>
 
-<<<<<<< HEAD
-   
-=======
->>>>>>> de6ed66 (.)
+
 
     <ul class="navbar-nav navbar-nav-right">
 
@@ -83,10 +80,15 @@
         </div>
       </li>
 
-      <li class="nav-item nav-profile dropdown">
-        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" id="profileDropdown">
-          <img src="{% static '/img/image copy 3.png' %}" alt="profile" />
-        </a>
+              <li class="nav-item nav-profile dropdown">
+      <a class="nav-link dropdown-toggle" 
+        href="{% url 'perfil_doador' request.user.pk %}" 
+        data-bs-toggle="dropdown" 
+        id="profileDropdown">
+        
+        <img src="{% static '/img/image copy 3.png' %}" alt="profile" />
+      </a>
+      </li>
 
       <li class="nav-item nav-settings d-none d-lg-flex">
         <a class="nav-link" href="#">

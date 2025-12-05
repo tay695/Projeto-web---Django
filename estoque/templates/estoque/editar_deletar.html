@@ -2,7 +2,7 @@
 
 {% block content %}
 <h2>
-    {% if acao == 'editar' %}Editar Item{% else %}Excluir Item{% endif %}
+    {% if acao == 'editar' %}Editar Item{% else %}Saída do Estoque{% endif %}
 </h2>
 
 <form method="POST" 
@@ -29,8 +29,8 @@
         </div>
         <button type="submit" class="btn btn-success">Salvar alterações</button>
     {% else %}
-        <p>Tem certeza que deseja excluir o item <strong>{{ item.nome }}</strong>?</p>
-        <button type="submit" class="btn btn-danger">Sim, quero excluir</button>
+        <p>Tem certeza que deseja remover do estoque <strong>{{ item.nome }}</strong>?</p>
+        <button type="submit" class="btn btn-danger">Sim, quero remover</button>
         <a href="{% url 'listar_estoque' %}" class="btn btn-secondary">Cancelar</a>
     {% endif %}
 </form>

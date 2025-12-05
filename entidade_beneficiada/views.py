@@ -1,9 +1,10 @@
 from django.http import HttpResponseForbidden
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse
-from django.contrib.auth.decorators import login_required, user_passes_test
+from django.contrib.auth.decorators import login_required
 from .forms import EntidadeBeneficiadaForm
 from .models import EntidadeBeneficiada
+from django.contrib.auth.decorators import permission_required
 
 
 def is_assistente_social(user):
@@ -11,6 +12,7 @@ def is_assistente_social(user):
 
 
 @login_required
+@permission_required('entidade_beneficiada.view_entidadebeneficiada')
 def entidade_list(request):
     entidades = EntidadeBeneficiada.objects.all()
     return render(request, 'entidade_beneficiada/entidade_list.html', {
@@ -18,6 +20,7 @@ def entidade_list(request):
     })
 
 @login_required
+@permission_required('entidade_beneficiada.add_entidadebeneficiada')
 def entidade_create(request):
     if request.method == 'POST':
         form = EntidadeBeneficiadaForm(request.POST)
@@ -32,6 +35,7 @@ def entidade_create(request):
     })
 
 @login_required
+@permission_required('entidade_beneficiada.change_entidadebeneficiada')
 def entidade_update(request, pk):
     entidade = get_object_or_404(EntidadeBeneficiada, pk=pk)
 
@@ -49,6 +53,7 @@ def entidade_update(request, pk):
     })
 
 @login_required
+@permission_required('entidade_beneficiada.delete_entidadebeneficiada')
 def entidade_delete(request, pk):
     entidade = get_object_or_404(EntidadeBeneficiada, pk=pk)
 
@@ -61,6 +66,7 @@ def entidade_delete(request, pk):
     })
 
 @login_required
+@permission_required('entidade_beneficiada.view_entidadebeneficiada')
 def entidade_detail(request, pk):
     entidade = get_object_or_404(EntidadeBeneficiada, pk=pk)
     return render(request, 'entidade_beneficiada/entidade_detail.html', {

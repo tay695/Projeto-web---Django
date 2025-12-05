@@ -43,6 +43,15 @@
 </li>
 {% endif %}
 
+{% if request.user.is_authenticated and request.user.doador %}
+      <li class="nav-item">
+       <a class="nav-link" href="{% url 'perfil_doador' id=request.user.doador.id %}">
+        <i class="icon-user menu-icon"></i>
+        <span class="menu-title">Meu Perfil</span>
+      </a>
+    </li>
+{% endif %}
+
 {% if request.user.is_superuser or 'doador.view_doador' in perms %}
 <li class="nav-item">
    <a class="nav-link" href="{% url 'listar_doador' %}"> 

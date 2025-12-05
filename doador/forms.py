@@ -3,6 +3,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User, Group
 from django.core.exceptions import ValidationError
 from .models import Doador
+from django.utils import timezone
 
 
 class CadastroDoadorForm(UserCreationForm):
@@ -48,7 +49,6 @@ class CadastroDoadorForm(UserCreationForm):
         model = User
         fields = (
             'username',
-            'email',
             'password1',
             'password2',
             'tipo',
@@ -96,6 +96,8 @@ class CadastroDoadorForm(UserCreationForm):
                 cnpj=self.cleaned_data.get('cnpj'),
                 telefone=self.cleaned_data.get('telefone'),
                 endereco=self.cleaned_data.get('endereco'),
+                
+                data_cadastro=timezone.now()
             )
 
         return user

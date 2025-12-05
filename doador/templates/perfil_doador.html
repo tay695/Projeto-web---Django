@@ -4,67 +4,70 @@
 {% block title %}Perfil do Doador - {{ doador.nome }}{% endblock %}
 
 {% block content %}
-<div class="page-header">
-    <h3 class="page-title">
-        <i class="ti-user"></i> Perfil do Doador
-    </h3>
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active">{{ doador.nome }}</li>
-        </ol>
-    </nav>
-</div>
 
-<div class="row">
-    <div class="col-lg-8 mx-auto grid-margin stretch-card">
-        <div class="card">
-            <div class="card-body">
-                <div class="row mb-4">
-                    <div class="col-md-12">
-                        <h4 class="card-title">{{ doador.nome }}</h4>
-                    </div>
+<div class="container my-5">
+    <div class="card shadow border-0 rounded-4">
+        <div class="card-body p-4 p-md-5">
+            <div class="row mb-4 align-items-center border-bottom pb-3">
+                <div class="col-md-8">
+                    <h2 class="text-success mb-0">Meu Perfil</h2>
                 </div>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <p>
-                            <strong>Email:</strong><br>
-                            <span class="text-muted">{{ doador.email }}</span>
-                        </p>
-                    </div>
-                    <div class="col-md-6 mb-3">
-                        <p>
-                            <strong>Telefone:</strong><br>
-                            <span class="text-muted">{{ doador.telefone|default:"Não informado" }}</span>
-                        </p>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <p>
-                            <strong>Endereço:</strong><br>
-                            <span class="text-muted">{{ doador.endereco|default:"Não informado" }}</span>
-                        </p>
-                    </div>
-                </div>
-
-                <hr>
-
-                <div class="row">
-                    <div class="col-md-12 mb-3">
-                        <p><strong>Data de Cadastro:</strong> {{ doador.data_cadastro|date:"d/m/Y H:i" }}</p>
-                    </div>
-                </div>
-
-                <div class="mt-4 d-flex gap-2">
-                    <a href="" class="btn btn-primary">
-                        <i class="ti-arrow-left"></i> Voltar
+                <div class="col-md-4 text-md-end text-start mt-3 mt-md-0">
+                    <a href="{% url 'editar_doador' doador.id %}" class="btn btn-warning">
+                        <i class="mdi mdi-pencil me-1"></i> Editar Perfil
                     </a>
                 </div>
             </div>
-        </div>
+
+            <div class="row mt-4">
+                
+                <div class="col-md-12">
+                    <h4 class="text-secondary mb-4">Informações Cadastrais</h4>
+                </div>
+
+                <div class="col-md-6 mb-4">
+                    <p class="mb-1"><strong>Nome / Razão Social:</strong></p>
+                    <p class="h5 text-dark">{{ doador.nome }}</p>
+                </div>
+                
+                <div class="col-md-6 mb-4">
+                    <p class="mb-1"><strong>Email:</strong></p>
+                    <p class="h5 text-dark">{{ doador.email }}</p>
+                </div>
+                
+                {% if doador.tipo == 'PF' %}
+                <div class="col-md-6 mb-4">
+                    <p class="mb-1"><strong>CPF:</strong></p>
+                    <p class="h5 text-dark">{{ doador.cpf|default:"Não informado" }}</p>
+                </div>
+                {% elif doador.tipo == 'PJ' %}
+                <div class="col-md-6 mb-4">
+                    <p class="mb-1"><strong>CNPJ:</strong></p>
+                    <p class="h5 text-dark">{{ doador.cnpj|default:"Não informado" }}</p>
+                </div>
+                {% endif %}
+
+                <div class="col-md-6 mb-4">
+                    <p class="mb-1"><strong>Telefone:</strong></p>
+                    <p class="h5 text-dark">{{ doador.telefone|default:"Não informado" }}</p>
+                </div>
+
+                <div class="col-md-12 mb-4">
+                    <p class="mb-1"><strong>Endereço:</strong></p>
+                    <p class="text-muted">{{ doador.endereco|default:"Não informado" }}</p>
+                </div>
+                
+                <div class="col-md-12">
+                    <hr>
+                </div>
+
+                <div class="col-md-6">
+                    <p class="mb-1"><strong>Membro desde:</strong></p>
+                    <p class="text-success">{{ doador.data_cadastro|date:"d/m/Y \à\s H:i" }}</p>
+                </div>
+
+            </div>
+            </div>
     </div>
 </div>
 

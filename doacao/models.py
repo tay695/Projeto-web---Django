@@ -23,7 +23,9 @@ class Doacao(models.Model):
         blank=True
     )
 
-    doador = models.CharField(max_length=100)
+    doador = models.ForeignKey(
+        "doador.Doador", on_delete=models.SET_NULL, null=True,)
+    
     data_doacao = models.DateTimeField(auto_now_add=True)
 
     coletada = models.BooleanField(default=False)

@@ -19,10 +19,15 @@ class DoacaoForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
 
         self.fields['ponto_coleta'].queryset = PontoColeta.objects.filter(status='ATIVO')
+
         self.fields['ponto_coleta'].empty_label = "Selecione um ponto de entrega" 
         self.fields['doador'].required = False 
         if not is_assistente_social:
             del self.fields['doador']
         else:
             self.fields['doador'].required = True    
+
+
+
+        self.fields['ponto_coleta'].empty_label = "O doador deve levar até o local do ponto de coleta de sua preferência"
 

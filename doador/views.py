@@ -1,4 +1,3 @@
-# doador/views.py
 from django import forms
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import login_required, permission_required
@@ -7,14 +6,13 @@ from .forms import CadastroDoadorForm, EditarDoadorForm
 from .models import Doador
 from django.contrib.auth import login
 from django.core.exceptions import PermissionDenied
-
+from django.contrib.auth.models import Group # Importe o Group para atribuição de permissão
 
 
 @login_required
 def perfil_doador(request, id):
     doador = get_object_or_404(Doador, pk=id)
 
-    # Garante que o usuário só veja o próprio perfil
     if doador.usuario != request.user:
         raise PermissionDenied("Você não pode acessar o perfil de outro usuário.")
 
@@ -35,7 +33,24 @@ def cadastro_doador(request):
             
             new_user = form.save() 
             
-            messages.success(request, "Cadastro realizado com sucesso! Você está logado(a).")
+            Doador.objects.create(
+                usuario=new_user, 
+                nome=form.cleaned_data.get('nome'),
+                tipo=form.cleaned_data.get('tipo'),
+                cpf=form.cleaned_data.get('cpf'),
+                cnpj=form.cleaned_data.get('cnpj'),
+                email=form.cleaned_data.get('email'),
+                telefone=form.cleaned_data.get('telefone'),
+                endereco=form.cleaned_data.get('endereco')
+            )
+            
+            try:
+                doador_group = Group.objects.get(name='Doador')
+                new_user.groups.add(doador_group)
+            except Group.DoesNotExist:
+                pass 
+            
+            messages.success(request, "Cadastro realizado com sucesso! Faça login.")
             return redirect('login') 
             
     else:

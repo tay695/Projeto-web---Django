@@ -53,6 +53,7 @@
 {% endif %}
 
 <li class="nav-item">
+<<<<<<< HEAD
     <a class="nav-link" href="#" 
        onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
        style="cursor: pointer;">
@@ -64,6 +65,15 @@
     <form id="logout-form" action="{% url 'logout' %}" method="post" style="display: none;">
         {% csrf_token %}
     </form>
+=======
+  <form action="{% url 'logout' %}" method="post" style="display: inline;">
+    {% csrf_token %}
+    <button type="submit" class="nav-link"style="background: none; border: none; width: 100%; text-align: left;">
+      <i class="icon-grid menu-icon"></i>
+      <span class="menu-title">Sair</span>
+    </button>
+  </form>
+>>>>>>> e0126a0 (.)
 </li>
 
     <li class="nav-item">

@@ -9,12 +9,15 @@ from django.contrib.auth import login
 from django.core.exceptions import PermissionDenied
 
 
+
 @login_required
 def perfil_doador(request, id):
     doador = get_object_or_404(Doador, pk=id)
-    
+
+    # Garante que o usuário só veja o próprio perfil
     if doador.usuario != request.user:
-        raise PermissionDenied("Você não tem permissão para acessar este perfil.")
+        raise PermissionDenied("Você não pode acessar o perfil de outro usuário.")
+
     return render(request, 'perfil_doador.html', {'doador': doador})
 
 

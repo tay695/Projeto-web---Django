@@ -65,7 +65,6 @@ def deletar_item(request, item_id):
     return render(request, 'estoque/editar_deletar.html', {'item': item, 'acao': 'deletar'})
 
 @login_required
-@permission_required('estoque.view_item', raise_exception=True)
 def detalhar_item(request, item_id):
     item = get_object_or_404(Item, id=item_id)
     doacoes = Doacao.objects.filter(nome=item.nome)
